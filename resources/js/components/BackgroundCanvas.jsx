@@ -18,8 +18,8 @@ export default function BackgroundCanvas() {
       x: Math.random() * width,
       y: Math.random() * height,
       size: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.7 + 0.2,
-      speed: Math.random() * 0.015 + 0.005,
+      baseAlpha: Math.random() * 0.4 + 0.3,
+      speed: Math.random() * 0.02 + 0.005,
       color: Math.random() > 0.4 ? '#38bdf8' : '#a855f7',
     }));
 
@@ -29,10 +29,10 @@ export default function BackgroundCanvas() {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Draw subtle stars with twinkle
+      // Draw subtle stars with twinkle (pure harmonic function, no cumulative drift)
       for (let star of stars) {
-        star.alpha += Math.sin(angle * star.speed * 80) * 0.004;
-        const currentAlpha = Math.max(0.1, Math.min(0.9, star.alpha));
+        const twinkle = Math.sin(angle * star.speed * 60) * 0.25;
+        const currentAlpha = Math.max(0.1, Math.min(0.85, star.baseAlpha + twinkle));
 
         ctx.fillStyle = star.color;
         ctx.globalAlpha = currentAlpha;
@@ -48,8 +48,18 @@ export default function BackgroundCanvas() {
     render();
 
     const handleResize = () => {
+      const oldWidth = width;
+      const oldHeight = height;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      
+      // Reposition stars proportionally
+      if (oldWidth > 0 && oldHeight > 0) {
+        stars.forEach((star) => {
+          star.x = (star.x / oldWidth) * width;
+          star.y = (star.y / oldHeight) * height;
+        });
+      }
     };
 
     window.addEventListener('resize', handleResize);

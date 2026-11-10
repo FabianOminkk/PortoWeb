@@ -8,6 +8,20 @@
 
         <title>{{ config('app.name', 'Steve Marvin') }} | Supervisor Brand Activation & Event Management</title>
         <meta name="description" content="Portofolio Steve Marvin — Supervisor Brand Activation di GOC (Purbasari, Amara, Onyx, CleanFace), Ex KANZLER (Cimory Group), spesialis Event Management & Brand Activation.">
+        <meta name="keywords" content="Steve Marvin, Brand Activation, Event Management, GOC, Purbasari, CleanFace, Amara, Onyx, Kanzler, Cimory, Dear Me Beauty, Portofolio">
+        <meta name="author" content="Steve Marvin">
+
+        <!-- Open Graph / Facebook / LinkedIn -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Steve Marvin | Supervisor Brand Activation & Event Management">
+        <meta property="og:description" content="Portofolio Steve Marvin — Supervisor Brand Activation di GOC (Purbasari, Amara, Onyx, CleanFace), Ex KANZLER (Cimory Group), spesialis Event Management & Brand Activation.">
+        <meta property="og:image" content="/assets/frontCard.png">
+
+        <!-- Twitter / X -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Steve Marvin | Supervisor Brand Activation & Event Management">
+        <meta name="twitter:description" content="Portofolio Steve Marvin — Supervisor Brand Activation di GOC (Purbasari, Amara, Onyx, CleanFace), Ex KANZLER (Cimory Group), spesialis Event Management & Brand Activation.">
+        <meta name="twitter:image" content="/assets/frontCard.png">
 
         <!-- Google Fonts API -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

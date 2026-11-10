@@ -212,9 +212,34 @@ export const awardsData = [
 ];
 
 export const spotifyTracks = [
-  { title: "Viva La Vida", artist: "Coldplay • Concert Band Edition", duration: "4:02" },
-  { title: "A Sky Full of Stars", artist: "Coldplay (Event Anthem)", duration: "4:28" },
-  { title: "Can't Stop the Feeling!", artist: "Justin Timberlake (Event Energy)", duration: "3:56" },
-  { title: "Uptown Funk", artist: "Mark Ronson ft. Bruno Mars", duration: "4:30" },
-  { title: "High Hopes", artist: "Panic! At The Disco (Campaign Launch)", duration: "3:10" }
+  {
+    title: "Viva La Vida",
+    artist: "Coldplay • Concert Band Edition",
+    duration: "4:04",
+    embedUrl: "https://open.spotify.com/embed/track/1mea3bSkSGXuIRvnydlB5b?utm_source=generator&theme=0"
+  },
+  {
+    title: "A Sky Full of Stars",
+    artist: "Coldplay (Event Anthem)",
+    duration: "4:28",
+    embedUrl: "https://open.spotify.com/embed/track/0QHmqeDQdOqr3tK4GQ8nEU?utm_source=generator&theme=0"
+  },
+  {
+    title: "Can't Stop the Feeling!",
+    artist: "Justin Timberlake (Event Energy)",
+    duration: "3:56",
+    embedUrl: "https://open.spotify.com/embed/track/6KuQTIu1KoTTkLXKrwlLPV?utm_source=generator&theme=0"
+  },
+  {
+    title: "Uptown Funk",
+    artist: "Mark Ronson ft. Bruno Mars",
+    duration: "4:30",
+    embedUrl: "https://open.spotify.com/embed/track/32OlwWuMpZ6b0aN2RZOeMS?utm_source=generator&theme=0"
+  },
+  {
+    title: "High Hopes",
+    artist: "Panic! At The Disco (Campaign Launch)",
+    duration: "3:10",
+    embedUrl: "https://open.spotify.com/embed/track/1rqqCSm0Qe4I9rUvWncaom?utm_source=generator&theme=0"
+  }
 ];

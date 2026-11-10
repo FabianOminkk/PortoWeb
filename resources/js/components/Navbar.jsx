@@ -35,6 +35,7 @@ export default function Navbar({ soundEnabled, toggleSound, playBeep }) {
       }
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

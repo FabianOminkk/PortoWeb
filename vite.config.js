@@ -12,4 +12,16 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor-three': ['three'],
+                    'vendor-react': ['react', 'react-dom'],
+                    'vendor-gsap': ['gsap', 'canvas-confetti'],
+                },
+            },
+        },
+        chunkSizeWarningLimit: 600,
+    },
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Send,
   Sparkles,
@@ -6,7 +6,8 @@ import {
   CheckCircle2,
   ExternalLink,
   Flame,
-  Award
+  Award,
+  Loader2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { personalInfo } from '../data/portfolioData';
@@ -15,10 +16,22 @@ import { InstagramIcon, LinkedInIcon } from './Icons';
 export default function Contact({ playBeep }) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [submittedName, setSubmittedName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const resetTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+    if (!formData.name || !formData.email || !formData.message || isSubmitting) return;
+
+    setIsSubmitting(true);
+    const senderName = formData.name;
 
     try {
       const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -33,8 +46,11 @@ export default function Contact({ playBeep }) {
       });
     } catch (err) {
       // offline / fallback
+    } finally {
+      setIsSubmitting(false);
     }
 
+    setSubmittedName(senderName);
     setSubmitted(true);
     playBeep?.(1000);
 
@@ -48,10 +64,11 @@ export default function Contact({ playBeep }) {
     } catch {}
 
     // Reset after a delay
-    setTimeout(() => {
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    resetTimerRef.current = setTimeout(() => {
       setSubmitted(false);
       setFormData({ name: '', email: '', message: '' });
-    }, 4000);
+    }, 4500);
   };
 
   return (
@@ -187,7 +204,7 @@ export default function Contact({ playBeep }) {
                   Pesan Berhasil Terkirim!
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-300">
-                  Terima kasih sudah menghubungi saya, {formData.name}. Saya akan segera memeriksa pesan Anda.
+                  Terima kasih sudah menghubungi saya, {submittedName || 'rekan'}. Saya akan segera memeriksa pesan Anda.
                 </p>
               </div>
             ) : (
@@ -238,10 +255,20 @@ export default function Contact({ playBeep }) {
 
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:brightness-110 active:scale-95 text-white shadow-lg shadow-sky-500/20 transition-all duration-200"
+                  disabled={isSubmitting}
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:brightness-110 active:scale-95 text-white shadow-lg shadow-sky-500/20 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Kirim Pesan</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Mengirim Pesan...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Kirim Pesan</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

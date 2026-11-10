@@ -25,9 +25,11 @@ export default function Portfolio({ playBeep }) {
   const [activeTab, setActiveTab] = useState('projects');
   const [selectedProject, setSelectedProject] = useState(null);
 
+  const totalSkillsCount = skillsData.reduce((acc, cat) => acc + (cat.skills ? cat.skills.length : 0), 0);
+
   const tabs = [
     { id: 'projects', label: 'Projects', icon: Code, count: projectsData.length },
-    { id: 'skills', label: 'Skills', icon: Layers, count: 18 },
+    { id: 'skills', label: 'Skills', icon: Layers, count: totalSkillsCount },
     { id: 'certificates', label: 'Certificates', icon: FileCheck, count: certificatesData.length },
     { id: 'awards', label: 'Awards', icon: Award, count: awardsData.length },
   ];

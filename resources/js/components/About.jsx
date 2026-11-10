@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   GraduationCap,
   Briefcase,
@@ -14,6 +14,10 @@ export default function About({ playBeep }) {
   const stageRef = useRef(null);
   const timeoutRef = useRef(null);
   const [spiderFullVisible, setSpiderFullVisible] = useState(false);
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
 
   const handlePointerMove = (e) => {
     const stage = stageRef.current;
@@ -274,7 +278,7 @@ export default function About({ playBeep }) {
             ))}
 
             {/* Quick highlight banner */}
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-rose-950/40 via-purple-950/40 to-slate-950/40 border border-rose-500/20 flex items-center justify-between">
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-rose-950/40 via-purple-950/40 to-slate-950/40 border border-rose-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
               <div>
                 <h5 className="text-sm font-semibold text-white">
                   Tertarik Berkolaborasi untuk Brand Activation?
@@ -286,7 +290,7 @@ export default function About({ playBeep }) {
               <a
                 href="#Contact"
                 onClick={() => playBeep?.(700)}
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-rose-500 hover:bg-rose-400 text-white transition-colors shadow-md shadow-rose-500/30"
+                className="inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500 hover:bg-rose-400 text-white transition-colors shadow-md shadow-rose-500/30 shrink-0 text-center"
               >
                 Hubungi
               </a>

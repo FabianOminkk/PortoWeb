@@ -6,40 +6,41 @@ import Lanyard from './Lanyard';
 
 export default function Hero({ playBeep }) {
   // Typewriter effect state
-  const [currentText, setCurrentText] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const roles = personalInfo.roles;
-    const currentRole = roles[roleIndex];
+    const currentRole = roles[roleIndex] || '';
 
-    const handleTyping = () => {
-      if (!isDeleting) {
-        if (charIndex < currentRole.length) {
-          setCurrentText((prev) => prev + currentRole[charIndex]);
+    let timer;
+    if (!isDeleting) {
+      if (charIndex < currentRole.length) {
+        timer = setTimeout(() => {
           setCharIndex((prev) => prev + 1);
-        } else {
-          // Pause at full word before deleting
-          setTimeout(() => setIsDeleting(true), 1600);
-          return;
-        }
+        }, 80);
       } else {
-        if (charIndex > 0) {
-          setCurrentText((prev) => prev.slice(0, -1));
-          setCharIndex((prev) => prev - 1);
-        } else {
-          setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
-          return;
-        }
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 1600);
       }
-    };
+    } else {
+      if (charIndex > 0) {
+        timer = setTimeout(() => {
+          setCharIndex((prev) => prev - 1);
+        }, 40);
+      } else {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+      }
+    }
 
-    const timer = setTimeout(handleTyping, isDeleting ? 45 : 85);
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, roleIndex]);
+
+  const currentRole = personalInfo.roles[roleIndex] || '';
+  const currentText = currentRole.slice(0, charIndex);
 
   return (
     <section id="Home" className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-12 sm:pb-20 overflow-visible">

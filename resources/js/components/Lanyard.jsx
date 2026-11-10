@@ -435,16 +435,10 @@ export default function Lanyard({
       }
     };
 
-    const onTouchStart = (e) => {
-      if (e.touches.length === 1) {
-        onPointerDown(e);
-      }
-    };
-
     container.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('pointermove', onPointerMove);
     window.addEventListener('pointerup', onPointerUp);
-    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('pointercancel', onPointerUp);
 
     // --- Resize Handler ---
     const handleResize = () => {
@@ -564,12 +558,28 @@ export default function Lanyard({
       container.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
-      container.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('pointercancel', onPointerUp);
 
       if (renderer.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
-      renderer.dispose();
+
+      // Dispose Three.js geometries, materials, and textures
+      try {
+        cardGeometry.dispose();
+        clipRingGeom.dispose();
+        clipBaseGeom.dispose();
+        cardMaterials.forEach((m) => m.dispose());
+        frontTex.dispose();
+        backTex.dispose();
+        if (strapTex) strapTex.dispose();
+        if (strapMesh?.geometry) strapMesh.geometry.dispose();
+        strapMaterial.dispose();
+        clipMat.dispose();
+        renderer.dispose();
+      } catch (e) {
+        // Safe disposal fallback
+      }
     };
   }, [frontImage, backImage, strapImage]);
 

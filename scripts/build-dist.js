@@ -19,6 +19,12 @@ const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 
 const cssFile = manifest['resources/css/app.css']?.file;
 const jsFile = manifest['resources/js/app.jsx']?.file;
+const importedChunks = manifest['resources/js/app.jsx']?.imports || [];
+const modulePreloadTags = importedChunks
+  .map((k) => manifest[k]?.file)
+  .filter(Boolean)
+  .map((file) => `    <link rel="modulepreload" crossorigin href="/build/${file}">`)
+  .join('\n');
 
 if (!cssFile || !jsFile) {
   console.error('Error: CSS or JS entry not found in manifest');
@@ -40,6 +46,9 @@ if (fs.existsSync(publicAssetsDir)) {
 // Copy public/build to dist/build
 const publicBuildDir = path.join(publicDir, 'build');
 const distBuildDir = path.join(distDir, 'build');
+if (fs.existsSync(distBuildDir)) {
+  fs.rmSync(distBuildDir, { recursive: true, force: true });
+}
 if (fs.existsSync(publicBuildDir)) {
   fs.cpSync(publicBuildDir, distBuildDir, { recursive: true });
 }
@@ -76,6 +85,20 @@ const indexHtmlContent = `<!DOCTYPE html>
       name="description"
       content="Portofolio Steve Marvin — Supervisor Brand Activation di GOC (Purbasari, Amara, Onyx, CleanFace), Ex KANZLER (Cimory Group), spesialis Event Management & Brand Activation."
     />
+    <meta name="keywords" content="Steve Marvin, Brand Activation, Event Management, GOC, Purbasari, CleanFace, Amara, Onyx, Kanzler, Cimory, Dear Me Beauty, Portofolio" />
+    <meta name="author" content="Steve Marvin" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Steve Marvin | Supervisor Brand Activation & Event Management" />
+    <meta property="og:description" content="Portofolio Steve Marvin — Supervisor Brand Activation di GOC (Purbasari, Amara, Onyx, CleanFace), Ex KANZLER (Cimory Group), spesialis Event Management & Brand Activation." />
+    <meta property="og:image" content="/assets/frontCard.png" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Steve Marvin | Supervisor Brand Activation & Event Management" />
+    <meta name="twitter:description" content="Portofolio Steve Marvin — Supervisor Brand Activation di GOC (Purbasari, Amara, Onyx, CleanFace), Ex KANZLER (Cimory Group), spesialis Event Management & Brand Activation." />
+    <meta name="twitter:image" content="/assets/frontCard.png" />
 
     <!-- Google Fonts API -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -89,7 +112,7 @@ const indexHtmlContent = `<!DOCTYPE html>
 
     <!-- Compiled Production Assets -->
     <link rel="stylesheet" crossorigin href="/build/${cssFile}">
-    <script type="module" crossorigin src="/build/${jsFile}"></script>
+${modulePreloadTags ? modulePreloadTags + '\n' : ''}    <script type="module" crossorigin src="/build/${jsFile}"></script>
   </head>
   <body class="bg-[#050510] text-[#e2e8f0] selection:bg-sky-500/30 selection:text-white font-sans antialiased overflow-x-hidden min-h-screen">
     <div id="root"></div>

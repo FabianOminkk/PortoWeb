@@ -1,13 +1,30 @@
 {
+  "_vendor-gsap-CXEw0R-E.js": {
+    "file": "assets/vendor-gsap-CXEw0R-E.js",
+    "name": "vendor-gsap"
+  },
+  "_vendor-react-DHz4kLit.js": {
+    "file": "assets/vendor-react-DHz4kLit.js",
+    "name": "vendor-react"
+  },
+  "_vendor-three-DkH8CL5p.js": {
+    "file": "assets/vendor-three-DkH8CL5p.js",
+    "name": "vendor-three"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-DHRR4Jlx.css",
+    "file": "assets/app-yvtAM7sx.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-D2fOCfNk.js",
+    "file": "assets/app-aDwdNkUD.js",
     "name": "app",
     "src": "resources/js/app.jsx",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_vendor-react-DHz4kLit.js",
+      "_vendor-gsap-CXEw0R-E.js",
+      "_vendor-three-DkH8CL5p.js"
+    ]
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Music, ExternalLink, Play, Disc3, Radio } from 'lucide-react';
+import { ExternalLink, Play } from 'lucide-react';
 import { personalInfo, spotifyTracks } from '../data/portfolioData';
 
 // Custom Spotify SVG Icon
@@ -13,6 +13,14 @@ function SpotifyLogo({ className = 'w-5 h-5' }) {
 
 export default function SpotifyWidget({ playBeep }) {
   const [activeTrackIndex, setActiveTrackIndex] = useState(0);
+
+  const activeTrack = spotifyTracks[activeTrackIndex];
+  const currentEmbedUrl = activeTrack?.embedUrl ?? personalInfo.spotifyEmbed;
+
+  const handleTrackClick = (idx) => {
+    setActiveTrackIndex(idx);
+    playBeep?.(700 + idx * 50);
+  };
 
   return (
     <section id="Spotify" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -37,7 +45,7 @@ export default function SpotifyWidget({ playBeep }) {
                 <span className="w-1 bg-emerald-400 rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-3.5" />
               </div>
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-400">
-                Spotify Event & Activation Vibes
+                Spotify Event &amp; Activation Vibes
               </span>
             </div>
 
@@ -53,7 +61,7 @@ export default function SpotifyWidget({ playBeep }) {
 
             {/* Description */}
             <p className="text-slate-300 text-xs sm:text-base leading-relaxed">
-              Kompilasi lagu penuh energi yang menemani perancangan strategi aktivasi brand, koordinasi panggung event akbar, hingga ritme dinamis dari latar belakang Concert Band & Musik di Universitas Bunda Mulia.
+              Kompilasi lagu penuh energi yang menemani perancangan strategi aktivasi brand, koordinasi panggung event akbar, hingga ritme dinamis dari latar belakang Concert Band &amp; Musik di Universitas Bunda Mulia.
             </p>
 
             {/* Open in Spotify CTA */}
@@ -78,13 +86,11 @@ export default function SpotifyWidget({ playBeep }) {
               </span>
               <div className="space-y-1.5">
                 {spotifyTracks.slice(0, 3).map((track, idx) => (
-                  <div
+                  <button
                     key={idx}
-                    onClick={() => {
-                      setActiveTrackIndex(idx);
-                      playBeep?.(700 + idx * 50);
-                    }}
-                    className={`flex items-center justify-between p-2.5 rounded-xl border text-xs cursor-pointer transition-all ${
+                    type="button"
+                    onClick={() => handleTrackClick(idx)}
+                    className={`w-full flex items-center justify-between p-2.5 rounded-xl border text-xs cursor-pointer transition-all text-left ${
                       activeTrackIndex === idx
                         ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
                         : 'bg-slate-900/60 border-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -103,18 +109,19 @@ export default function SpotifyWidget({ playBeep }) {
                     <span className="text-[10px] font-mono text-slate-400 shrink-0">
                       {track.duration}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right Column: Embedded Spotify Playlist Iframe Player */}
+          {/* Right Column: Embedded Spotify Track Iframe Player */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="relative w-full rounded-2xl overflow-hidden border border-slate-700/80 bg-slate-950 shadow-2xl shadow-emerald-950/20 group">
               <iframe
-                title="Spotify Event & Activation Playlist"
-                src={personalInfo.spotifyEmbed}
+                key={currentEmbedUrl}
+                title="Spotify Event & Activation Player"
+                src={currentEmbedUrl}
                 width="100%"
                 height="380"
                 frameBorder="0"
@@ -136,3 +143,4 @@ export default function SpotifyWidget({ playBeep }) {
     </section>
   );
 }
+
