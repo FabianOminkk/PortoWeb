@@ -23,7 +23,7 @@ export default function SpotifyWidget({ playBeep }) {
   };
 
   return (
-    <section id="Spotify" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="Spotify" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24 sm:scroll-mt-28">
       {/* Background ambient neon glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -82,23 +82,23 @@ export default function SpotifyWidget({ playBeep }) {
             {/* Mini Tracks Quick Switch */}
             <div className="space-y-2 pt-2">
               <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
-                Featured Vibes
+                Pilih Lagu Event &amp; Activation
               </span>
-              <div className="space-y-1.5">
-                {spotifyTracks.slice(0, 3).map((track, idx) => (
+              <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+                {spotifyTracks.map((track, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => handleTrackClick(idx)}
                     className={`w-full flex items-center justify-between p-2.5 rounded-xl border text-xs cursor-pointer transition-all text-left ${
                       activeTrackIndex === idx
-                        ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
+                        ? 'bg-emerald-500/15 border-emerald-400 text-white shadow-sm shadow-emerald-500/20'
                         : 'bg-slate-900/60 border-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 truncate">
-                      <Play className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
-                      <span className="font-medium text-slate-200 truncate">
+                      <Play className={`w-3.5 h-3.5 shrink-0 ${activeTrackIndex === idx ? 'text-emerald-400 fill-emerald-400' : 'text-slate-400'}`} />
+                      <span className={`font-medium truncate ${activeTrackIndex === idx ? 'text-emerald-300 font-semibold' : 'text-slate-200'}`}>
                         {track.title}
                       </span>
                       <span className="text-slate-500">•</span>
@@ -106,7 +106,7 @@ export default function SpotifyWidget({ playBeep }) {
                         {track.artist}
                       </span>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0 ml-2">
                       {track.duration}
                     </span>
                   </button>

@@ -67,7 +67,7 @@ export default function About({ playBeep }) {
   };
 
   return (
-    <section id="About" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="About" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 sm:scroll-mt-28">
       {/* Section Header */}
       <div className="flex flex-col items-center text-center space-y-3 mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/25 text-xs font-mono text-rose-400">

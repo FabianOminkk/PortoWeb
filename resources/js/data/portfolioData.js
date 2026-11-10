@@ -222,13 +222,13 @@ export const spotifyTracks = [
     title: "A Sky Full of Stars",
     artist: "Coldplay (Event Anthem)",
     duration: "4:28",
-    embedUrl: "https://open.spotify.com/embed/track/0QHmqeDQdOqr3tK4GQ8nEU?utm_source=generator&theme=0"
+    embedUrl: "https://open.spotify.com/embed/track/0FDzzruyVECATHXKHFs9eJ?utm_source=generator&theme=0"
   },
   {
     title: "Can't Stop the Feeling!",
     artist: "Justin Timberlake (Event Energy)",
     duration: "3:56",
-    embedUrl: "https://open.spotify.com/embed/track/6KuQTIu1KoTTkLXKrwlLPV?utm_source=generator&theme=0"
+    embedUrl: "https://open.spotify.com/embed/track/6JV2JOEocMgcZxYSZelKcc?utm_source=generator&theme=0"
   },
   {
     title: "Uptown Funk",
